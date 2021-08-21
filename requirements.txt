@@ -1,0 +1,14 @@
+Django==2.2.3
+django-adaptors==0.2.5
+django-advanced-filters==1.1.1
+django-braces==1.13.0
+django-countries==5.3.3
+django-crispy-forms==1.7.2
+django-watson==1.5.2
+nepali-date==1.0.2
+psycopg2==2.8.3
+pytz==2019.1
+simplejson==3.16.0
+sqlparse==0.3.0
+django-import-export
+django-dbbackup
