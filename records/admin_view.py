@@ -23,6 +23,7 @@ def send_email_admin(request):#needs message and subject...
         form=email_form(request.POST)
         if form.is_valid():
             #Now the email will be sent to all recipients
+            sender_email = form.data.get('sender') if 'sender' in request.POST else None
             str_sub = form.data.get('subject')
             str_msg = form.data.get('message')
             recipients=queryset_capture

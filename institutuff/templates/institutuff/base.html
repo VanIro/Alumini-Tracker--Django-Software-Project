@@ -34,8 +34,8 @@
 
             <!-- Navbar brand -->
             <a class="navbar-brand ml-3 float-left" href="{% url 'institute-log-out' %}"> DOECE Alumni Admin Portal </a>
+            <a class="navbar-brand ml-3 float-left" href="{% url 'institute-logged-in' %}"> Home </a>
             <!--a class="navbar-brand ml-3 float-left" href="{% url 'record-home' %}"> DOECE Alumni Portal </a-->
-
             <!-- Collapse button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                     aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,8 +49,8 @@
 
                     <li class="nav-item ml-6">
                         <!--a class="nav-link" href="{% url 'record-home' %}">
-                            View Yearbook<span class="sr-only">(current)</span>
-                        </a-->
+                    View Yearbook<span class="sr-only">(current)</span>
+                </a-->
 
 
                     <li class="nav-item ml-10">
@@ -84,7 +84,7 @@
     <main role="main" class="container ">
         <div class="row">
             {% block content_left %}{% endblock %}
-            <div class="col-md-8">
+            <div class="col-md w-100">
                 {% if messages %}
                 {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">
@@ -96,8 +96,8 @@
             </div>
         </div>
         <hr>
-        <div style="text-align:center;" class="container">
-            <div style="display: inline-block" class="row small">
+        <div style="text-align:center;" class="row">
+            <div style="display: inline-block" class="col small">
                 <b style="text-align:center">Developed by:</b><br>
                 bip,jiw,yam,lun<br>
                 BCT 2075 but lots of copy from 2073 though, for now

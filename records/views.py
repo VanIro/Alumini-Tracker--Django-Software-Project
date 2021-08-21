@@ -252,15 +252,17 @@ def AlumniUpdateViewGate(request,batch_bs,program_code,roll_number,last_name,dob
         if not studnt == request.user.student_user:
             return HttpResponse('Unauthorized', status=401)
     elif request.user.groups.filter(name="Institutes").exists():
+        return AlumniUpdateView.as_view()(request,batch_bs=batch_bs,program_code=program_code,
+                                          roll_number=roll_number,last_name=last_name,dob_bs=dob_bs,app_name="institutuff")
         pass
     else: 
         return HttpResponse('Unauthorized Group...', status=401)
     return AlumniUpdateView.as_view()(request,batch_bs=batch_bs,program_code=program_code,
-                                      roll_number=roll_number,last_name=last_name,dob_bs=dob_bs)
+                                      roll_number=roll_number,last_name=last_name,dob_bs=dob_bs,app_name="records")
 
 class AlumniUpdateView(SuccessMessageMixin, UpdateView):
     model = Student
-    template_name = 'records/alumni_form.html'
+    template_name = '/alumni_form.html'
     queryset = Student.objects.filter()
     form_class = AlumniForm
     success_message ="Alumni record updated successfully!"
@@ -272,6 +274,7 @@ class AlumniUpdateView(SuccessMessageMixin, UpdateView):
             data['addresses'] = AddressFormSet(self.request.POST, instance=self.object)
             data['furtheracademicstatus'] = FurtherAcademicStatusFormSet(self.request.POST, instance=self.object)
         else:
+            self.template_name = self.kwargs['app_name'] + '/alumni_form.html'
             data['addresses'] = AddressFormSet(instance=self.object)
             data['furtheracademicstatus'] = FurtherAcademicStatusFormSet(instance=self.object)
         return data
@@ -303,7 +306,7 @@ class AlumniUpdateView(SuccessMessageMixin, UpdateView):
 
     def get_form(self, *args, **kwargs):
         dob_bs = self.kwargs['dob_bs']
-        dob_bs = dob_bs[:4]+'/'+dob_bs[4:6]+'/'+dob_bs[6:]
+        dob_bs = dob_bs[:4]+'/'+dob_bs[4:6]+'/'+dob_bs[6:] if len(dob_bs)>4 else dob_bs
         form = super(AlumniUpdateView, self).get_form(*args, **kwargs)
         if not form.base_fields['dob_bs']:
             form.base_fields['dob_bs']= dob_bs

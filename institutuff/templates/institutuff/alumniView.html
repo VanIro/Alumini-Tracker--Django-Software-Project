@@ -2,48 +2,52 @@
 {% extends "institutuff/base.html" %}
 
 {%block content%}
-<body>
     <legend class="border-bottom mb-4 mt-4">
         {%if user.is_authenticated%} <b>Logged in as {{user.username}}</b>{%else%}<b>Not logged in</b>{%endif%}<!--this line works?-->
     </legend>
-    {%for alumnus in alumni%}
-    <ul>
-        <a href="{{alumnus.absolute_url}}">
-            {{alumnus.first_name}} {%if alumnus.middle_name%}{{alumnus.middle_name}}{%endif%} {{alumnus.last_name}}
-        </a>
-    </ul>
-    {%endfor%}
-    <div class="w-100"></div>
-    <div class="pagination row">
-        <span class="step-links column">
-            {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-
-            {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages}}">last &raquo;</a>
-            {% endif %}
-        </span>
-        <div class="w-100"></div>
-        <div class="column">
-            <h6>
-                goto page : <input type="number" id="page_num" onchange="pnum_change(this.value)" style="width:50px;">
-                <a id="go_to_page_num" href="">Go</a>
-            </h6>
+    <div class="container">
+        <div class="list row col" style="min-height: 100px; background-color: rgb(255, 238, 235)">
+            {%for alumnus in alumni%}
+            <ul class="list-element">
+                <a href="{{alumnus.absolute_url}}">
+                    {{alumnus.first_name}} {%if alumnus.middle_name%}{{alumnus.middle_name}}{%endif%} {{alumnus.last_name}}
+                </a>
+                {{alumnus.full_roll_number}}
+            </ul>
+            {%endfor%}
         </div>
-        <script>
-            function pnum_change(val) {
-                console.log(val)
-                let page_num = {{ page_obj.number }}
-                if (val > 0 && val <= {{ page_obj.paginator.num_pages }}) page_num = val;
-                document.getElementById("go_to_page_num").setAttribute("href", "?page=" + page_num);
-            }
-        </script>
+        <br/>
+        <div class="pagination row small">
+            <span class="step-links row w-100">
+                {% if page_obj.has_previous %}
+                <a href="?page=1" class="column">&laquo; first</a>
+                <span class="col-sm-1"></span>
+                <a href="?page={{ page_obj.previous_page_number }}" class="column">previous</a>
+                <span class="col-sm-1"></span>
+                {% endif %}
+                <span class="current" class="column">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                <span class="col-sm-1"></span>
+                <a href="?page={{ page_obj.next_page_number }}" class="column">next</a>
+                <span class="col-sm-1"></span>
+                <a href="?page={{ page_obj.paginator.num_pages}}" class="column">last &raquo;</a>
+                {% endif %}
+            </span>
+            <div class="w-100"></div>
+            <div class="row column">
+                    goto page : <input type="number" id="page_num" onchange="pnum_change(this.value)" style="width:50px;">
+                    <a id="go_to_page_num" href="">Go</a>
+            </div>
+            <script>
+                function pnum_change(val) {
+                    //console.log(val)
+                    let page_num = {{ page_obj.number }}
+                    if (val > 0 && val <= {{ page_obj.paginator.num_pages }}) page_num = val;
+                    document.getElementById("go_to_page_num").setAttribute("href", "?page=" + page_num);
+                }
+            </script>
+        </div>
     </div>
     {%endblock%}

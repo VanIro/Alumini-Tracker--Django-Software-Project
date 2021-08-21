@@ -90,7 +90,7 @@ def send_email(request, string, str_sub, str_msg):
 
 class view_alumni(ListView):
     model=Student
-    paginate_by = 2
+    paginate_by = 1
     template_name = 'institutuff/alumniView.html'
     context_object_name = 'alumni'
 
