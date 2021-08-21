@@ -1,0 +1,29 @@
+{% extends "records/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="content-section row">
+        <div class="col-md-auto">
+            <legend class="border-bottom mb-4 mt-4">
+                <b>Login to Update Data</b>
+            </legend>
+            <br />
+            {%block email_login%}{%endblock%}
+            {%include "account/login_.html"%}
+        </div>
+        <div class="col-md-auto float-right">
+            <legend class="border-bottom mb-4 mt-4">
+                <b>First time Login (If you have not yet input your email)</b>
+            </legend>
+            <br/>
+            {% crispy form_first %}
+        </div>
+    </div>
+    <br/>
+    <div class = "border-top pt-3">
+        <small class="text-muted">
+            Cannot access your account? Send an email to <img src="{% static 'pictures/email.png' %}" width=200px>
+        </small>
+    </div>
+{% endblock %}
