@@ -1,0 +1,27 @@
+
+nano /etc/httpd/conf/httpd.conf backed up at /etc/httpd/conf/working_backups/httpd_nginx_redirect_almost_all_manaslu.conf
+
+<VirtualHost 192.168.10.17:80>
+ServerName manaslu.pcampus.edu.np
+#DocumentRoot /var/www/html
+#DirectoryIndex index.html
+
+RewriteEngine On
+RewriteCond %{HTTP:Upgrade} websocket [NC]                                                                                                                                  RewriteRule /disaster/(.*) ws://127.0.0.1:8030/$1 [P]
+
+ProxyPass /disaster http://127.0.0.1:8030
+ProxyPassReverse /disaster http://127.0.0.1:8030
+
+ProxyPass / http://127.0.0.1:8050/
+ProxyPassReverse / http://127.0.0.1:8050/
+
+<Location />
+  Order allow,deny                                                                                                                                                            Allow from all                                                                                                                                                            </Location>
+
+
+ProxyPreserveHost On
+ProxyErrorOverride Off
+
+</VirtualHost>
+
+

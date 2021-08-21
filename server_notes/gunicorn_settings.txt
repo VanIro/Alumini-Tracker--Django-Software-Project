@@ -1,0 +1,16 @@
+(venv) [bob@manaslu system]$ pwd
+/etc/systemd/system
+
+(venv) [bob@manaslu system]$ cat gunicorn_alumni_nginx.service
+[Unit]
+Description=gunicorn daemon alumni database on nginx
+After=network.target
+
+[Service]
+User=bob
+Group=nginx
+WorkingDirectory=/home/bob/DoeceAlumniStudentPortal
+ExecStart=/home/bob/DoeceAlumniStudentPortal/venv/bin/gunicorn --workers 3 --bind unix:/home/bob/DoeceAlumniStudentPortal/DOECEAlumniStudent.sock DOECEAlumniStudent.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

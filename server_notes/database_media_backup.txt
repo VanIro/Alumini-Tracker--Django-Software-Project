@@ -1,0 +1,15 @@
+FOR BACKUPS
+Backups directory: /home/bob/DoeceAlumniStudentPortal/dbbackup
+Steps to backup:
+
+1) cd /home/bob/DoeceAlumniStudentPortal/
+2) source venv/bin/activate
+3) python manage.py dbbackup
+4) python manage.py mediabackup
+
+Details on how to backup/restore: https://github.com/django-dbbackup/django-dbbackup
+
+Database automatically backs up every week(If I remember correctly). Right now, cron job
+matra gareko chhu which runs backup_script.sh on a weekly basis.
+Try to make a more robust solution, which backups on a more or equally frequent basis,
+but removes all but some of the older backups.
