@@ -1,0 +1,28 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<style type="text/css">
+  .delete-row {
+    align-self: center;
+  }
+</style>
+
+{{ formset.management_form|crispy }}
+
+{% for form in formset.forms %}
+  {% for hidden in form.hidden_fields %}
+    {{ hidden|as_crispy_field }}
+  {% endfor %}
+  {% crispy form %}
+{% endfor %}
+
+<br>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static 'records/libraries/django-dynamic-formset/jquery.formset.js' %}"></script>
+<script type="text/javascript">
+    $('.formset_row-{{ formset.prefix }}').formset({
+        addText: 'add another',
+        deleteText: 'remove',
+        prefix: '{{ formset.prefix }}',
+    });
+</script>

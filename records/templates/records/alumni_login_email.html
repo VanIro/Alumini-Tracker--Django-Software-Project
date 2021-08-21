@@ -1,0 +1,18 @@
+{% extends "records/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="content-section">
+        <legend class="border-bottom mb-4 mt-4">
+            <b>Login to Update Data</b>
+        </legend>
+        <br>
+        {% crispy form %}
+    </div>
+    <div class = "border-top pt-3">
+        <small class="text-muted">
+            Cannot access your account? Send an email to <img src="{% static 'pictures/email.png' %}" width=200px>
+        </small>
+    </div>
+{% endblock %}

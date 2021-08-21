@@ -1,0 +1,32 @@
+{% extends "records/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content_twoForms %}
+<div class="column">
+    <h5>(If you have not yet signed up. Sign up to make your account more secure)</h5>
+</div>
+<div class="w-100"></div>
+    <!--div class="content-section row"-->
+    <div class="col-md-auto">
+        <!--<legend class="border-bottom mb-4 mt-4">
+            <b>Sign In</b>
+        </legend>-->
+        <br />
+        {%autoescape off%}{{hellore}}{%endautoescape%}
+    </div>
+    <div class="col-md-6 ">
+        <legend class="border-bottom mb-4 mt-4">
+            <b> Login </b>
+        </legend>
+        <br />
+        {% crispy form %}
+    </div>
+    <!--/div-->
+    <br />
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Cannot access your account? Send an email to <img src="{% static 'pictures/email.png' %}" width=200px>
+        </small>
+    </div>
+    {% endblock %}

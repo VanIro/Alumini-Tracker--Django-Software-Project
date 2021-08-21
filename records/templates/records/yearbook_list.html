@@ -1,0 +1,100 @@
+{% extends "records/base.html" %}
+{% load static %}
+{% block content %}
+    <h2 class="mb-3"><b>Yearbook {{ view.kwargs.program_code }} Batch {{ view.kwargs.batch_bs }}</b></h2>
+
+    Is your data incomplete or incorrect? You can update your info <a href="{% url 'alumni-login' %}">here</a><br><br>
+    {% for student in students %}
+        <article class="media content-section">
+          {% if student.recent_passport_size_photo %}
+              <div class="float-left article-img">
+                  <img style="height: 100%; transform: translateX(-50%);margin-left: 50%;" class="rounded-circle" src="{{ student.recent_passport_size_photo.url }}">
+              </div>
+          {% else %}
+{#            <img class="rounded-circle article-img" src="{{ MEDIA_URL }}pictures/default_user.png">#}
+{#            <img class="rounded-circle article-img" src="{% static 'pictures/default_user.png' %}">#}
+              <div class="float-left article-img">
+                  <img style="height: 100%; transform: translateX(-50%);margin-left: 50%;" class="rounded-circle" src="{% static 'pictures/default_user.png' %}">
+              </div>
+          {% endif %}
+        {% spaceless %}
+          <div class="media-body">
+{#            <div class="article-metadata">#}
+{#              <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>#}
+{#              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>#}
+{#            </div>#}
+          {% spaceless %}
+            <h4><div class="article-title"><b>
+                {% spaceless %}
+                {% if student.title %}{{ student.title }} {{ student.full_name }}
+                {% else %}{{ student.full_name }}
+                {% endif %}
+                {% endspaceless %}
+            </b></div></h4>
+          {% endspaceless %}
+              {% spaceless %}
+              <div class="container">
+                  <dl class="row">{% spaceless %}
+                        {% for address in student.has_addresses.all %}{% spaceless %}
+                            {% ifequal address.address_type 'Current' %}
+                                <dt class="col-sm-6"><i class="far fa-address-card"></i> Current Address</dt>
+                                <dd class="col-sm-6">{{address.country.name}}</dd>
+                            {% endifequal %}
+                            {% endspaceless %}
+                        {% endfor %}
+                        {% endspaceless %}
+                        {% spaceless %}
+                        {% if student.currently_employed_organization %}
+                          <dt class="col-sm-6"><i class="fas fa-user"></i>  Currently Working at</dt>
+                          <dd class="col-sm-6">{{student.currently_employed_organization}}</dd>
+                        {% endif %}
+                        {% endspaceless %}
+                        {% spaceless %}
+                        {% if student.current_post_in_organization %}
+                            <dt class="col-sm-6"><i class="fas fa-user-md"></i> Position</dt>
+                          <dd class="col-sm-6">{{student.current_post_in_organization}}</dd>
+                        {% endif %}
+                        {% endspaceless %}
+
+{#                        {% spaceless %}{% if student.areas_of_expertise %}#}
+{#                      <dt class="col-sm-6"><i class="fas fa-briefcase"></i> Areas of Expertise</dt>#}
+{#                      <dd class="col-sm-6">{{student.areas_of_expertise}}</dd>#}
+{#                {% endif %}#}
+{#                {% endspaceless %}#}
+
+
+{#                      <dt class="col-sm-6"><i class="fas fa-clock"></i> Employee Time</dt>#}
+{#                      <dd class="col-sm-6">{{object.employee_time}}</dd>#}
+                  </dl>
+            </div>
+            <p class="article-content">
+
+
+            </p>
+                  {% endspaceless %}
+          </div>
+        {% endspaceless %}
+        </article>
+    {% endfor %}
+    {% if is_paginated %}
+
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %}
+{% endblock content %}

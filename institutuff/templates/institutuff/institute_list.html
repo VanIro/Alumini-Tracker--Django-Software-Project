@@ -1,0 +1,52 @@
+{% extends "institutuff/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="content-section">
+    <legend class="border-bottom mb-4 mt-4">
+       {%if user.is_authenticated%} <b>Logged in as {{user.username}}</b>{%endif%}<!--this line works?-->
+    </legend>
+    <br>
+    Here was a form. RIP
+</div>
+
+{% for institute in institute_list %}
+    {{institute.first_name}}
+    {{institute.last_name}}
+    {{institute.userName}}
+    <br>
+{% endfor %}
+
+<script src="{% static 'institutuff/choices.js'%}"></script>
+<script src="{% static 'institutuff/filter.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'institutuff/institute_home.css' %}">
+<div>
+    <div id="email_window">
+        Send Email
+        <form id="email_form" action='{%url "institute-logged-in"%}' method='POST'>
+            {%csrf_token%}
+            <input type="hidden" name="list_recipients" id="list_recipients">
+            <div id="subject_container">
+                <label for="email_subject" id="label">subject</label>
+                <input type="text" name="subject" id="email_subject" />
+            </div>
+            <div id="message_container">
+                <label for="email_text" id="label">message</label>
+                <input type="text" name="message" id="email_text" />
+            </div>
+        </form>
+        <div id="recipients_window">
+            <label for="filter_tags">Recipients:</label>
+            <div id='filter_tags'></div>
+        </div>
+        <button onclick=getSelectionsString()>send</button>
+    </div>
+</div>
+
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Cannot access your account? Send an email to <img src="{% static 'pictures/email.png' %}" width=200px>
+    </small>
+</div>
+{% endblock %}

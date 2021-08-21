@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <!-- Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design for Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'records/main.css' %}">
+
+{#    {% if title %}#}
+{#        <title>Job Vacancy And CV Management - {{ title }}</title>#}
+{#    {% else %}#}
+{#        <title>Job Vacancy And CV Management</title>#}
+{#    {% endif %}#}
+    <title>DOECE Alumni Portal</title>
+</head>
+<header class="site-header" >
+
+        <!--Navbar-->
+
+<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top" id="topheader" >
+<div class="container">
+    <ul class="navbar-nav ml-auto nav-flex-icons float-left" style="margin-right: 10px">
+      <li class="nav-item avatar">
+        <a class="nav-link p-0" href="#">
+          <img src="{% static 'pictures/tu-logo.png' %}" class="rounded-circle z-depth-0" alt="logo" height="35">
+        </a>
+      </li>
+    </ul>
+
+  <!-- Navbar brand -->
+  <a class="navbar-brand ml-3 float-left" href="{% url 'record-home' %}"> DOECE Alumni Portal </a>
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Collapsible content -->
+  <div class="collapse navbar-collapse" id="navbarToggle">
+
+          <ul class="navbar-nav ml-auto">
+
+      <li class="nav-item ml-6">
+        <a class="nav-link" href="{% url 'record-home' %}">View Yearbook<span class="sr-only">(current)</span>
+        </a>
+
+
+
+      {% if object.full_roll_number %}
+              <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="userDropDown" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="fas fa-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+              <a class="dropdown-item " href="#">{{object.full_roll_number}}</a>
+                <div role="separator" class="dropdown-divider"></div>
+              <a class="dropdown-item " href="{% url 'record-home' %}"><button type="button" class="btn btn-outline-danger waves-effect">Log Out</button></a>
+      {% else %}
+          </li><li class="nav-item ml-10">
+            <a class="nav-link nav-item" href="{% url 'alumni-login' %}">Update Info
+              <!--<span class="sr-only">(current)</span>-->
+            </a>
+          </li>
+      {% endif %}
+            </div>
+          </li>
+          </ul>
+    <!-- Links -->
+
+  </div>
+  <!-- Collapsible content -->
+    </div>
+</nav>
+<!--/.Navbar-->
+
+    </header>
+<body >
+
+
+    <main role="main" class="container " >
+      <div class="row">
+            {% block content_left %}{% endblock %}
+        <div class="col-md-8"><!--div class="col-md-auto"></div-->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+        {%block content_twoForms%}{%endblock%}
+        <div class="col-md-auto">
+          {% block content_twoForms_L %}{% endblock %}
+        </div>
+        <div class="col-md-auto">
+          {% block content_twoForms_R %}{% endblock %}
+        </div>
+      </div>
+    <hr>
+    <div style="text-align:center;" class="container">
+        <div style="display: inline-block" class="row small">
+            <b style="text-align:center">Developed by:</b><br>
+            Anusandhan Pokhrel, Baibhav Bista, Lumanti Dangol, Mohit Kedia<br>
+            BCT 2073<br>
+            <b style="text-align:center">Updated by:</b><br>
+            Bipin, Jiwan, Yaman, Luna<br>
+            BCT 2075
+        </div>
+    </div>
+    </main>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Popper.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+  <!-- Bootstrap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+  <!-- Material Design for Bootstrap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/js/mdb.min.js"></script>
+
+</body>
+</html>

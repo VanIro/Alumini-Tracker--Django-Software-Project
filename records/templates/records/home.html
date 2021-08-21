@@ -1,0 +1,46 @@
+{% extends "records/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content_left %}
+    <div class="col-md-4 ">
+          <div class="content-section float-left">
+            <legend class="border-bottom mb-4 mt-2">
+                <b>Welcome to the Alumni Portal for DOECE</b>
+            </legend>
+
+            <img src="{% static 'pictures/department.jpg' %}" width="550px">
+            <br><br>
+
+            The Department of Electronics and Computer Engineering organized a celebration program to mark the 25th year of BE program in our department.
+              <br> An alumni year book was released on that occasion which can be downloaded <a href="{% static 'ebook_Alumni_Silver_jubilee.pdf' %}">here</a>
+{#            <br><br>To view your yearbook, enter program and batch in the alongside form.#}
+{#            <br>#}
+{#            You can update your info <a href="{% url 'alumni-login' %}">here</a>#}
+              <br><br>
+              For Facebook group of DOECE Alumni, click <a href="https://www.facebook.com/groups/329629637950764/">here</a>
+          </div>
+
+        </div>
+{% endblock %}
+{% block content %}
+    <div class="content-section-small float-right">
+        <legend class="border-bottom mb-2 mt-2">
+            <b>View your yearbook</b>
+        </legend>
+        <br>
+        {% crispy form %}
+        <hr>
+        <b>Records of Diploma alumni are available <a href="{% static 'doece_diploma.pdf' %}">here</a></b>
+        <br>
+        <hr>
+        <legend class="border-bottom mb-2 mt-2">
+            <b>View/Update your info</b>
+        </legend>
+            Do you want to view or update your information?<br>
+            Login below:
+            <div style="text-align:center;">
+                <a href="{% url 'alumni-login' %}" class="btn btn-primary">Login</a>
+            </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+#filter_tags {
+    width: 90%;
+}
+.tag_label_class {
+    display:inline-block;
+    width: 20%;
+    height: 20%;
+}
+.label_class{
+    background-color:burlywood;
+    padding-left:10%;
+    width:98%;
+}
+label#label {
+    width: 15%;
+}
+.recipients_tag {
+    width: 98%;
+    margin:0;
+}
