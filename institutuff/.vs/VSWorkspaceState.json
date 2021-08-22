@@ -6,6 +6,6 @@
     "\\templates",
     "\\templates\\institutuff"
   ],
-  "SelectedNode": "\\views.py",
+  "SelectedNode": "\\templates\\institutuff\\institute_list.html",
   "PreviewInSolutionExplorer": false
 }

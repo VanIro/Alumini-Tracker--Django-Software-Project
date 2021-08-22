@@ -2,8 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\DOECEAlumniStudent",
-    "\\records"
+    "\\institutuff\\templates",
+    "\\institutuff\\templates\\institutuff",
+    "\\records",
+    "\\records\\templates",
+    "\\records\\templates\\records"
   ],
-  "SelectedNode": "\\records\\urls.py",
+  "SelectedNode": "\\records\\choices.py",
   "PreviewInSolutionExplorer": false
 }

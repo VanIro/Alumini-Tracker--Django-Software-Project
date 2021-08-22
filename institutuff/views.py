@@ -1,5 +1,6 @@
 from institutuff.models import Institute
 from records.models import Student
+from institutuff.filters import StudentFilter
 
 from django.shortcuts import render
 from .forms import LoginForm
@@ -93,9 +94,22 @@ class view_alumni(ListView):
     paginate_by = 1
     template_name = 'institutuff/alumniView.html'
     context_object_name = 'alumni'
+    def __init__(self, *args, **kwargs):
+        self.filter_form=None
+        super(view_alumni,self).__init__(*args,**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context=super(view_alumni,self).get_context_data(**kwargs)
+        context['filter_form'] = self.filter_form
+        #context['filter'] = StudentFilter(self.request.GET, self.queryset)
+        return context
 
     def get_queryset(self):
-        return Student.objects.filter()
+        queryset = Student.objects.filter()
+        filter = StudentFilter(self.request.GET, queryset)
+        #self.context['qrySet'] = filter.qs
+        self.filter_form = filter.form
+        return filter.qs#self.context['filter'].qs#Student.objects.filter()
 
     #def get_context_data(self,*args,**kwargs):
     #    context=super().get_context_data(*args,**kwargs)
