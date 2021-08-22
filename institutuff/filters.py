@@ -1,6 +1,10 @@
 from django.db.models import Q
 from records.models import Student
+from records.models import Address
 from records.choices import PROGRAM_LEVEL_CHOICES
+from django.core.exceptions import ValidationError
+from django_countries.fields import CountryField
+from django_countries import countries
 import django_filters
 
 class StudentFilter(django_filters.FilterSet):
@@ -31,6 +35,22 @@ class StudentFilter(django_filters.FilterSet):
             return queryset.filter(
                     Q(phd_roll_number__isnull=False)
                 )
+    #is this check_country efficient?
+    def check_country(self, queryset, name, value):
+        dict_req = dict(countries)
+        dict_values = [val.lower() for val in list(dict_req.values())]
+        try:
+            code=list(dict_req.keys())[dict_values.index(value.lower())]
+        except ValueError:
+            return Student.objects.none()
+
+        qset=Address.objects.filter(country__iexact=code).select_related('student')
+        if not qset.exists():
+            return Student.objects.none()
+        list_stdnt = [a.student.id for a in qset] 
+        #raise ValidationError(list_stdnt)
+        return Student.objects.filter(id__in=list_stdnt)
+
 
     class Meta:
         model=Student
