@@ -32,7 +32,7 @@
     <ul class="navbar-nav ml-auto nav-flex-icons float-left" style="margin-right: 10px">
       <li class="nav-item avatar">
         <a class="nav-link p-0" href="#">
-          <img src="{% static 'pictures/tu-logo.png' %}" class="rounded-circle z-depth-0" alt="logo" height="35">
+          <img src="{% static 'pictures/tu-logo.png' %}" class="rounded-circle z-depth-0" alt="logo" height="55">
         </a>
       </li>
     </ul>
@@ -52,7 +52,7 @@
           <ul class="navbar-nav ml-auto">
 
       <li class="nav-item ml-6">
-        <a class="nav-link" href="{% url 'record-home' %}">View Yearbook<span class="sr-only">(current)</span>
+        <a class="nav-link btn" href="{% url 'record-home' %}">View Yearbook<span class="sr-only">(current)</span>
         </a>
 
 
@@ -69,7 +69,7 @@
               <a class="dropdown-item " href="{% url 'record-home' %}"><button type="button" class="btn btn-outline-danger waves-effect">Log Out</button></a>
       {% else %}
           </li><li class="nav-item ml-10">
-            <a class="nav-link nav-item" href="{% url 'alumni-login' %}">Update Info
+            <a class="nav-link nav-item btn" href="{% url 'alumni-login' %}">Update Info
               <!--<span class="sr-only">(current)</span>-->
             </a>
           </li>
@@ -89,7 +89,7 @@
 <body >
 
 
-    <main role="main" class="container " >
+    <main role="main" class="container " style="font-size:15px;" >
       <div class="row">
             {% block content_left %}{% endblock %}
         <div class="col-md-8"><!--div class="col-md-auto"></div-->
@@ -111,16 +111,12 @@
         </div>
       </div>
     <hr>
-    <div style="text-align:center;" class="container">
-        <div style="display: inline-block" class="row small">
-            <b style="text-align:center">Developed by:</b><br>
-            Anusandhan Pokhrel, Baibhav Bista, Lumanti Dangol, Mohit Kedia<br>
-            BCT 2073<br>
-            <b style="text-align:center">Updated by:</b><br>
-            Bipin, Jiwan, Yaman, Luna<br>
-            BCT 2075
-        </div>
-    </div>
+    <div style="text-align:center;" class="row" >
+      <div style="display: inline-block; position:absolute; bottom:0%; left:0%; font-size:12px;  background-color:#bebfc9; padding:10px;" class="col small">
+          <b style="text-align:center; font-size:15px;">Developed by:</b><br>
+          Bipin.Jiwan.Yaman.Luna<br>
+      </div>
+  </div>
     </main>
 
     <!-- Optional JavaScript -->

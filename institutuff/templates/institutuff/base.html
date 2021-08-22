@@ -27,55 +27,56 @@
             <ul class="navbar-nav ml-auto nav-flex-icons float-left" style="margin-right: 10px">
                 <li class="nav-item avatar">
                     <a class="nav-link p-0" href="#">
-                        <img src="{% static 'pictures/tu-logo.png' %}" class="rounded-circle z-depth-0" alt="logo" height="35">
+                        <img src="{% static 'pictures/tu-logo.png' %}" class="rounded-circle z-depth-0" alt="logo" height="55">
                     </a>
                 </li>
             </ul>
 
-            <!-- Navbar brand -->
-            <a class="navbar-brand ml-3 float-left" href="{% url 'institute-log-out' %}"> DOECE Alumni Admin Portal </a>
-            <a class="navbar-brand ml-3 float-left" href="{% url 'institute-logged-in' %}"> Home </a>
-            <!--a class="navbar-brand ml-3 float-left" href="{% url 'record-home' %}"> DOECE Alumni Portal </a-->
-            <!-- Collapse button -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+             <!-- Navbar brand -->
+             <a class="navbar-brand ml-3 float-left" style="padding:10px;" href="{% url 'institute-log-out' %}"> DOECE Alumni Admin Portal </a>
+             <a class="navbar-brand ml-3 float-left btn" style="position: absolute; right:12%;" href="{% url 'institute-logged-in' %}"><span class="fa fa-home fa-lg"></span> Home </a>
+             <!--a class="navbar-brand ml-3 float-left" href="{% url 'record-home' %}"> DOECE Alumni Portal </a-->
+             <!-- Collapse button -->
+             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                     aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                 <span class="navbar-toggler-icon"></span>
+             </button>
 
-            <!-- Collapsible content -->
-            <div class="collapse navbar-collapse" id="navbarToggle">
+           <!-- Collapsible content -->
+           <div class="collapse navbar-collapse" id="navbarToggle">
 
-                <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto">
 
-                    <li class="nav-item ml-6">
-                        <!--a class="nav-link" href="{% url 'record-home' %}">
-                    View Yearbook<span class="sr-only">(current)</span>
-                </a-->
+                <li class="nav-item ml-6">
+                    <!--a class="nav-link" href="{% url 'record-home' %}">
+                View Yearbook<span class="sr-only">(current)</span>
+            </a-->
 
 
-                    <li class="nav-item ml-10">
-                        {%if user.is_authenticated%}
-                        <a class="nav-link nav-item" href="{% url 'institute-log-out' %}">
-                            log out
-                            <!--<span class="sr-only">(current)</span>-->
-                        </a>
-                        {%else%}
-                        <a class="nav-link nav-item" href="{% url 'institute-log-in' %}">
-                            Update Info
-                            <!--<span class="sr-only">(current)</span>-->
-                        </a>
-                        {% endif %}
-                    </li>
-            </div>
-            </li>
-            </ul>
-            <!-- Links -->
-
+                <li class="nav-item ml-10 btn" style="position:absolute; right:5%; top:20%; padding:2px; background-color: #2f3036; border-radius:2px solid rgb(28, 17, 66);">
+                    {%if user.is_authenticated%}
+                    <a class="nav-link nav-item" href="{% url 'institute-log-out' %}">
+                        Log out
+                        <!--<span class="sr-only">(current)</span>-->
+                    </a>
+                    {%else%}
+                    <a class="nav-link nav-item" href="{% url 'institute-log-in' %}">
+                        Update Info
+                        <!--<span class="sr-only">(current)</span>-->
+                    </a>
+                    {% endif %}
+                </li>
         </div>
-        <!-- Collapsible content -->
-        </div>
-    </nav>
-    <!--/.Navbar-->
+        </li>
+        </ul>
+        <!-- Links -->
+
+    </div>
+    <!-- Collapsible content -->
+    </div>
+    </div>
+</nav>
+<!--/.Navbar-->
 
 </header>
 <body>
@@ -96,11 +97,10 @@
             </div>
         </div>
         <hr>
-        <div style="text-align:center;" class="row">
-            <div style="display: inline-block" class="col small">
-                <b style="text-align:center">Developed by:</b><br>
-                bip,jiw,yam,lun<br>
-                BCT 2075 but lots of copy from 2073 though, for now
+        <div style="text-align:center;" class="row" >
+            <div style="display: inline-block; position:absolute; bottom:7%; left:0%; font-size:12px;  background-color:#bebfc9; padding:10px;" class="col small">
+                <b style="text-align:center; font-size:15px;">Developed by:</b><br>
+                Bipin.Jiwan.Yaman.Luna<br>
             </div>
         </div>
     </main>

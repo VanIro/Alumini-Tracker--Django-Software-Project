@@ -14,9 +14,8 @@
             {{ filter_form.as_p }}
             <input type="submit" />
         </form>
-        <div class="filter_form row col" style="min-height: 100px; background-color: rgb(255, 238, 235)">
-        </div>
-        <div class="list row col" style="min-height: 100px; background-color: rgb(255, 238, 235)">
+        <br>
+        <div class="list row col col-md-8 offset-md-2" style="min-height: 100px; padding:25px; background-color:#d1d1d1; box-shadow: 12px 12px 16px 0 rgba(0, 0, 0, 0.25), -8px -8px 12px 0 rgba(255, 255, 255, 0.3);  border-radius:10px ;">
             {%for alumnus in alumni%}
             <ul class="list-element">
                 <a href="{{alumnus.absolute_url}}">
@@ -27,7 +26,7 @@
             {%endfor%}
         </div>
         <br />
-        <div class="pagination row small">
+        <div class="pagination row small col-4 offset-4 col-md-2 offset-md-5">
             <span class="step-links row w-100">
                 {% if page_obj.has_previous %}
                 <a href="?page=1" class="column">&laquo; first</a>

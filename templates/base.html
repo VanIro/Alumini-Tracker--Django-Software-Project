@@ -27,13 +27,14 @@
             <ul class="navbar-nav ml-auto nav-flex-icons float-left" style="margin-right: 10px">
                 <li class="nav-item avatar">
                     <a class="nav-link p-0" href="#">
-                        <img src="{% static 'pictures/tu-logo.png' %}" class="rounded-circle z-depth-0" alt="logo" height="35">
+                        <img src="{% static 'pictures/tu-logo.png' %}" class="rounded-circle z-depth-0" alt="logo" height="55">
                     </a>
                 </li>
             </ul>
 
             <!-- Navbar brand -->
-            <a class="navbar-brand ml-3 float-left" href="{% url 'institute-log-out' %}"> DOECE Alumni Admin Portal </a>
+            <a class="navbar-brand ml-3 float-left" style="padding:10px;"  href="{% url 'institute-log-out' %}"> DOECE Alumni Admin Portal </a>
+            <a class="navbar-brand ml-3 float-left btn" style="position: absolute; right:12%;" href="{% url 'institute-logged-in' %}"><span class="fa fa-home fa-lg"></span> Home </a>
             <!--a class="navbar-brand ml-3 float-left" href="{% url 'record-home' %}"> DOECE Alumni Portal </a-->
 
             <!-- Collapse button -->
@@ -96,11 +97,10 @@
             </div>
         </div>
         <hr>
-        <div style="text-align:center;" class="container">
-            <div style="display: inline-block" class="row small">
-                <b style="text-align:center">Developed by:</b><br>
-                bip,jiw,yam,lun<br>
-                BCT 2075 but lots of copy from 2073 though, for now
+        <div style="text-align:center;" class="row" >
+            <div style="display: inline-block; position:absolute; bottom:7%; left:0%; font-size:12px;  background-color:#bebfc9; padding:10px;" class="col small">
+                <b style="text-align:center; font-size:15px;">Developed by:</b><br>
+                Bipin.Jiwan.Yaman.Luna<br>
             </div>
         </div>
     </main>

@@ -3,20 +3,21 @@
 {% load crispy_forms_tags %}
 
 {% block content_twoForms %}
-<div class="column">
-    <h5>(If you have not yet signed up. Sign up to make your account more secure)</h5>
-</div>
+
 <div class="w-100"></div>
     <!--div class="content-section row"-->
-    <div class="col-md-auto">
+    <div class="col-md-5" style="border:2px 0px solid #5f788a; box-shadow: 12px 12px 16px 0 rgba(0, 0, 0, 0.25), -8px -8px 12px 0 rgba(255, 255, 255, 0.3);  border-radius:10px ;">
         <!--<legend class="border-bottom mb-4 mt-4">
             <b>Sign In</b>
         </legend>-->
         <br />
+        <text style="color:dimgray; font-size:20px;"><b>STAY CONNECTED</b> with</text><br>&nbsp;
+        <text style="border:2px solid rgb(206, 206, 206); color:#5f788a; font-size:50px;"><b> &nbsp;ALUMNI<br>&nbsp;&nbsp; TRACKER &nbsp;</b></text>
+        
         {%autoescape off%}{{hellore}}{%endautoescape%}
     </div>
-    <div class="col-md-6 ">
-        <legend class="border-bottom mb-4 mt-4">
+    <div class="col-md-5 offset-md-1 " style="border:3px solid rgb(240, 240, 240); border-radius:10px;">
+        <legend class="border-bottom mb-4 mt-4" >
             <b> Login </b>
         </legend>
         <br />
@@ -26,7 +27,7 @@
     <br />
     <div class="border-top pt-3">
         <small class="text-muted">
-            Cannot access your account? Send an email to <img src="{% static 'pictures/email.png' %}" width=200px>
+            Cannot access your account? Send an email to <img src="{% static 'pictures/email.png' %}" width=150px>
         </small>
     </div>
     {% endblock %}
