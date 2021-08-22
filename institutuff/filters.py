@@ -7,7 +7,8 @@ class StudentFilter(django_filters.FilterSet):
     batch = django_filters.CharFilter(method='check_batch', label='batch/year')
     program = django_filters.CharFilter(method='check_program', label='program code')
     level = django_filters.CharFilter(method='check_level',label='level')#, choices=PROGRAM_LEVEL_CHOICES)
-    
+    country = django_filters.CharFilter(method='check_country',label='country')
+
     def check_batch(self, queryset, name, value):
         return queryset.filter(
                 Q(be_batch_bs=value)|Q(msc_batch_bs=value)|Q(phd_batch_bs=value)
