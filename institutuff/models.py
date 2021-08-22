@@ -18,7 +18,7 @@ def validate_group(username):
     useru = User.objects.get(id=username)
     if not useru.groups.filter(name="Institutes").exists():
         raise ValidationError(
-            (f'{useru.username} was not found to be a member of "institute_members".')
+            (f'{useru.username} was not found to be a member of "Institutes".')
         )
 
 TITLE_CHOICES = (
