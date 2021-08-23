@@ -18,7 +18,7 @@ urlpatterns =[
     path('std_logout/', views.logout_student, name='student-log-out'),
     # path('<batch_bs>/<program_code>/<roll_number>/', AlumniDetailView.as_view(), name='record-detail'),
     path('<batch_bs>/<program_code>/yearbook/', YearbookListView.as_view(), name='yearbook-view'),
-    path('<batch_bs>/<program_code>/<roll_number>/<last_name>/<dob_bs>/update/', AlumniUpdateViewGate, name='record-update-gate'),
+    path('<batch_bs>/<program_code>/<roll_number>/<last_name>/<dob_bs>/update/', AlumniUpdateViewGate, name='record-update'),
     #path('<batch_bs>/<program_code>/<roll_number>/<last_name>/<dob_bs>/update/', AlumniUpdateView.as_view(), name='record-update'),
     path('admin/records/student/email_send',send_email_admin,name='email-form'),
 ]

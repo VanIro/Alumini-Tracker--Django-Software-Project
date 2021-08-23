@@ -39,6 +39,7 @@ def institute_login(request):
 def institute_logged_in(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect (reverse('institute-log-in'))
+    #return HttpResponse("ynha aayo...")
     return view_alumni.as_view()(request)
 
     if request.method =='POST':
@@ -91,7 +92,7 @@ def send_email(request, string, str_sub, str_msg):
 
 class view_alumni(ListView):
     model=Student
-    paginate_by = 1
+    paginate_by = 7
     template_name = 'institutuff/alumniView.html'
     context_object_name = 'alumni'
     def __init__(self, *args, **kwargs):

@@ -199,7 +199,7 @@ def alumni_logged_in(request):
     else:
         params[4]=' '
     return redirect(
-                'record-update-gate',
+                'record-update',#'record-update-gate',
                 batch_bs=params[0],
                 program_code=params[1],
                 roll_number=params[2],
