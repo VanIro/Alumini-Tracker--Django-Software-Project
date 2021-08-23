@@ -10,6 +10,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from .choices import BE_PROGRAM_CHOICES, MSC_PROGRAM_CHOICES, PROGRAM_LEVEL_CHOICES, GROUPED_PROGRAM_CHOICES
 from .models import Student
 from .forms import LoginForm, AddressFormSet, AlumniForm, FurtherAcademicStatusFormSet, YearbookViewForm
+from .forms2 import Alumni_signup_form
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db import transaction
@@ -90,11 +91,37 @@ def alumni_login(request):
     #if request.user.is_authenticated:
     logout(request)
 
-    form = LoginForm()
-    
+    #form = LoginForm()
+    form = Alumni_signup_form()
     if request.method == "POST":
-        if 'roll_number' in request.POST:
-            form = LoginForm(data=request.POST)
+        #if 'roll_number' in request.POST:
+        #    form = LoginForm(data=request.POST)
+        #    if form.is_valid():
+        #        kwargs={
+        #            'last_name':form.data.get('last_name'),
+        #            'batch_bs':form.data.get('batch_bs'),
+        #            'program_code':form.data.get('program'),
+        #            'roll_number':form.data.get('roll_number')
+        #        }
+        #        studnt = get_student_object(kwargs,Student.objects.filter(),form.data.get('dob_bs'))
+        #        if studnt.user_account is not None:
+        #            #raise ValidationError(studnt.user_account.name)
+        #            messages.warning(request, f'You naed to login with your email and password.')# {studnt.first_name}.')
+        #            return redirect(reverse('alumni-login')) 
+                
+        #        return redirect(
+        #            reverse('record-update',
+        #                    kwargs={
+        #                        'batch_bs':form.data.get('batch_bs'),
+        #                        'program_code':form.data.get('program'),
+        #                        'roll_number':form.data.get('roll_number'),
+        #                        'last_name':form.data.get('last_name').strip(), #i know this is bad form but its past midnight and I am tired af. Sorry :D
+        #                        'dob_bs':form.data.get('dob_bs').replace('/', ''),
+        #                }
+        #            )
+        #        )
+        if 'password2' in request.POST:
+            form = Alumni_signup_form(data=request.POST)
             if form.is_valid():
                 kwargs={
                     'last_name':form.data.get('last_name'),
@@ -104,16 +131,9 @@ def alumni_login(request):
                 }
                 studnt = get_student_object(kwargs,Student.objects.filter(),form.data.get('dob_bs'))
                 if studnt.user_account is not None:
-                    messages.warning(request, f'You need to login with your email and password.')# {studnt.first_name}.')
+                    #raise ValidationError(studnt.user_account.name)
+                    messages.warning(request, f'You have already signed up. You need to log in.')# {studnt.first_name}.')
                     return redirect(reverse('alumni-login')) 
-                return redirect(
-                    'record-update',
-                    batch_bs=form.data.get('batch_bs'),
-                    program_code=form.data.get('program'),
-                    roll_number=form.data.get('roll_number'),
-                    last_name=form.data.get('last_name').strip(), #i know this is bad form but its past midnight and I am tired af. Sorry :D
-                    dob_bs=form.data.get('dob_bs').replace('/', ''),
-                )
             else:
                 messages.warning(request, f'Record not found! Please check credentials properly')
         else:
@@ -128,7 +148,8 @@ def alumni_login(request):
     #     form = LoginForm()
     context = {
         'form': form,
-        'hellore':allauth_accounts_views.login(request).render().content.decode('utf-8')
+        'hellore':allauth_accounts_views.login(request).render().content.decode('utf-8'),
+        'hellore_signup':allauth_accounts_views.signup(request).render().content.decode('utf-8')
     }
     return render(request, 'records/alumni_login.html', context)
 
@@ -237,26 +258,28 @@ class AlumniDetailView(DetailView):
             raise Http404("No Alumni matches the given query.")
 
 def AlumniUpdateViewGate(request,batch_bs,program_code,roll_number,last_name,dob_bs):
-    if not request.user.is_authenticated:
-        messages.add_message(request,messages.WARNING,"You need to log in")
-        return redirect(reverse('alumni-login'))
-    if request.user.groups.filter(name="Students").exists():
-        #a little bit inefficient?
-        kwargs={
-            'last_name':form.data.get('last_name'),
-            'batch_bs':form.data.get('batch_bs'),
-            'program_code':form.data.get('program'),
-            'roll_number':form.data.get('roll_number')
-        }
-        studnt = get_student_object(kwargs,Student.objects.filter(),form.data.get('dob_bs'))
-        if not studnt == request.user.student_user:
-            return HttpResponse('Unauthorized', status=401)
-    elif request.user.groups.filter(name="Institutes").exists():
-        return AlumniUpdateView.as_view()(request,batch_bs=batch_bs,program_code=program_code,
-                                          roll_number=roll_number,last_name=last_name,dob_bs=dob_bs,app_name="institutuff")
-        pass
-    else: 
-        return HttpResponse('Unauthorized Group...', status=401)
+    #studnt = get_student_object(kwargs,Student.objects.filter(),form.data.get('dob_bs'))
+    if True:#studnt.user_account is not None:
+        if not request.user.is_authenticated:
+            messages.add_message(request,messages.WARNING,"You need to log in")
+            return redirect(reverse('alumni-login'))
+        if request.user.groups.filter(name="Students").exists():
+            #a little bit inefficient?
+            kwargs={
+                'last_name':last_name,
+                'batch_bs':batch_bs,
+                'program_code':program_code,
+                'roll_number':roll_number
+            }
+            studnt = get_student_object(kwargs,Student.objects.filter(),dob_bs)
+            if not studnt == request.user.student_user:
+                return HttpResponse('Unauthorized', status=401)
+        elif request.user.groups.filter(name="Institutes").exists():
+            return AlumniUpdateView.as_view()(request,batch_bs=batch_bs,program_code=program_code,
+                                              roll_number=roll_number,last_name=last_name,dob_bs=dob_bs,app_name="institutuff")
+            pass
+        else: 
+            return HttpResponse('Unauthorized Group...', status=401)
     return AlumniUpdateView.as_view()(request,batch_bs=batch_bs,program_code=program_code,
                                       roll_number=roll_number,last_name=last_name,dob_bs=dob_bs,app_name="records")
 
@@ -322,9 +345,11 @@ class AlumniUpdateView(SuccessMessageMixin, UpdateView):
 def get_student_object(kwargs,queryset=None, dob_bs=None):
     #dob_bs = self.kwargs['dob_bs']
     if dob_bs is not None:
-        dob_bs = dob_bs[:4]+'/'+dob_bs[4:6]+'/'+dob_bs[6:]
+        if not '/' in dob_bs:
+            dob_bs = dob_bs[:4]+'/'+dob_bs[4:6]+'/'+dob_bs[6:]
     ret_object=None
     if kwargs['program_code'] in be_programs_list:
+        #raise ValidationError(f"ynha chai aayo ni tata... {dob_bs}")
         try:
             bachelor = queryset.get(Q(
                 last_name__iexact=kwargs['last_name'], 
@@ -342,7 +367,7 @@ def get_student_object(kwargs,queryset=None, dob_bs=None):
             ret_object = bachelor
             #return bachelor
         except Student.DoesNotExist:
-            raise Http404(f"No Alumni matches the given query {kwargs['last_name']} {kwargs['program_code']} {kwargs['batch_bs']} .")
+            raise Http404(f"No be Alumni matches the given query {kwargs['last_name']} {kwargs['program_code']} {kwargs['batch_bs']} .")
     elif kwargs['program_code'] in msc_programs_list:
         try:
             master = queryset.get( Q(

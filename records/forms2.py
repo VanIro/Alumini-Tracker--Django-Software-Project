@@ -11,6 +11,7 @@ from .custom_layout_object import Formset
 
 from django.contrib import messages
 from django.contrib.auth.models import Group
+from django.core.exceptions import ValidationError
 
 import re
 
@@ -77,7 +78,6 @@ class Alumni_signup_form(SignupForm):
             last_name = self.data.get('last_name').strip()
             dob_bs = self.data.get('dob_bs')
             if program in be_programs_list:
-                #raise ValidationError("ynha chai aayo...")
                 query = Student.objects.filter(Q( be_batch_bs__exact=batch_bs,last_name__iexact=last_name,
                                               be_roll_number__exact=roll_number, dob_bs__isnull=True
                                               ) |
@@ -106,11 +106,13 @@ class Alumni_signup_form(SignupForm):
                 #    return True
             else:
                 return False
+            
+            #raise ValidationError("ynha chai aayo...")
             if query.exists():
                 self.queried_student = query.get() 
-                if self.queried_student.user_account:
-                    messages.INFO("this user has already registered")
-                    return False
+                #if self.queried_student.user_account:
+                #    messages.INFO("this user has already registered")
+                #    return False
                 return True
         except(ValueError, TypeError):
             return False
