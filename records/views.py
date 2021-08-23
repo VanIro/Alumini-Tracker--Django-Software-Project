@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.http.response import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, UpdateView, ListView
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -84,6 +84,9 @@ class YearbookListView(ListView):
         else:
             raise Http404("No Alumni matches the given query.")
 
+def logout_student(request):
+    logout(request)
+    return HttpResponseRedirect (reverse('alumni-login'))
 
 def alumni_login(request):
     #added in 2075 #does this have any side effects? just using this as it seems to work... for now 
