@@ -149,9 +149,14 @@ def alumni_login(request):
     #return HttpResponse("ynha aayo... ta")#delete this line
     # else:
     #     form = LoginForm()
+    hellore_sign_in=allauth_accounts_views.login(request)
+    try:
+        hellore_sign_in = hellore_sign_in.render().content.decode('utf-8')
+    except AttributeError:
+        return hellore_sign_in
     context = {
         'form': form,
-        'hellore':allauth_accounts_views.login(request).render().content.decode('utf-8'),
+        'hellore':hellore_sign_in,
         'hellore_signup':allauth_accounts_views.signup(request).render().content.decode('utf-8')
     }
     return render(request, 'records/alumni_login.html', context)

@@ -78,6 +78,7 @@ class Alumni_signup_form(SignupForm):
             last_name = self.data.get('last_name').strip()
             dob_bs = self.data.get('dob_bs')
             if program in be_programs_list:
+                #raise ValidationError(f"ynha chai aayo"+f" {batch_bs} {last_name} {roll_number} {dob_bs}")
                 query = Student.objects.filter(Q( be_batch_bs__exact=batch_bs,last_name__iexact=last_name,
                                               be_roll_number__exact=roll_number, dob_bs__isnull=True
                                               ) |
