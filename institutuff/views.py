@@ -14,6 +14,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import DeleteView
 from django.core.mail.message import EmailMessage
 
+from django.core.exceptions import ValidationError
+
 
 
 # Create your views here.
@@ -92,21 +94,24 @@ def send_email(request, string, str_sub, str_msg):
 
 class view_alumni(ListView):
     model=Student
-    paginate_by = 7
+    paginate_by = 17
     template_name = 'institutuff/alumniView.html'
     context_object_name = 'alumni'
     def __init__(self, *args, **kwargs):
         self.filter_form=None
+        self.query_display = None
         super(view_alumni,self).__init__(*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context=super(view_alumni,self).get_context_data(**kwargs)
         context['filter_form'] = self.filter_form
+        context['query_display'] = self.query_display
         #context['filter'] = StudentFilter(self.request.GET, self.queryset)
         return context
 
     def get_queryset(self):
         queryset = Student.objects.filter()
+        self.query_display = query_string(self.request.GET) 
         filter = StudentFilter(self.request.GET, queryset)
         #self.context['qrySet'] = filter.qs
         self.filter_form = filter.form
@@ -116,3 +121,19 @@ class view_alumni(ListView):
     #    context=super().get_context_data(*args,**kwargs)
     #    context[]=institute.objects.all().order_by()
     #    return context
+
+filter_categories = [
+        "batch", "program","level","country"
+    ]
+def query_string(get_data):
+    string = ""
+    flag = False
+    for fil in filter_categories:
+        if fil in get_data and len(get_data[fil].strip()) > 0:
+            flag = True
+            string = string + fil + " : '" + get_data[fil] + "' , "
+
+    if flag: 
+        string = string[:-3]
+        return string
+    else : return None

@@ -14,6 +14,7 @@ class StudentFilter(django_filters.FilterSet):
     country = django_filters.CharFilter(method='check_country',label='country')
 
     def check_batch(self, queryset, name, value):
+        #raise ValidationError(list(queryset.filter( Q(be_batch_bs=value)|Q(msc_batch_bs=value)|Q(phd_batch_bs=value) )))
         return queryset.filter(
                 Q(be_batch_bs=value)|Q(msc_batch_bs=value)|Q(phd_batch_bs=value)
             )
@@ -46,7 +47,8 @@ class StudentFilter(django_filters.FilterSet):
         except ValueError:
             return Student.objects.none()
 
-        qset=Address.objects.filter(country__iexact=code).select_related('student')
+        qset=Address.objects.filter( id__in = queryset.values('has_addresses__id') )\
+                                .filter(country__iexact=code).select_related('student')
         if not qset.exists():
             return Student.objects.none()
         list_stdnt = [a.student.id for a in qset] 
