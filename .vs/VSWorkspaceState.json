@@ -1,13 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\allauth_templates",
     "\\allauth_templates\\account",
-    "\\DOECEAlumniStudent",
-    "\\records",
+    "\\institutuff\\templates",
+    "\\institutuff\\templates\\institutuff",
     "\\records\\templates",
     "\\records\\templates\\records"
   ],
-  "SelectedNode": "\\records\\views.py",
+  "SelectedNode": "\\backup",
   "PreviewInSolutionExplorer": false
 }

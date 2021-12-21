@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'advanced_filters',
+    'django_filters',
     'crispy_forms',
     'dbbackup',
 ]
@@ -130,6 +131,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # Eliminate need to provide username, as it's a very old practice
 ACCOUNT_USERNAME_REQUIRED = False
+#
+#LOG_IN_REDIRECT_URL='/'
 
 
 # Internationalization
@@ -152,7 +155,7 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800
 
 
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
-DBBACKUP_STORAGE_OPTIONS = {'location': '/home/bob/DoeceAlumniStudentPortal/dbbackup/'}
+DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR +'/'+ 'backup'}     #'/home/bob/DoeceAlumniStudentPortal/dbbackup/'}
 
 DATABASES = {
     'default': {

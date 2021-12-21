@@ -35,6 +35,8 @@ class StudentFilter(django_filters.FilterSet):
             return queryset.filter(
                     Q(phd_roll_number__isnull=False)
                 )
+        else : 
+            return Student.objects.none()
     #is this check_country efficient?
     def check_country(self, queryset, name, value):
         dict_req = dict(countries)

@@ -26,8 +26,10 @@ be_programs_list = [program[0] for program in BE_PROGRAM_CHOICES]
 msc_programs_list = [program[0] for program in MSC_PROGRAM_CHOICES]
 phd_programs_list = ['PhD']
 
-
+def jptei(request,batch_bs):
+    return HttpResponse("hey hey hey")
 # Create your views here.
+
 def record_home(request):
     context = {}
     # return render(request, 'records/base.html', context)
@@ -89,40 +91,11 @@ def logout_student(request):
     return HttpResponseRedirect (reverse('alumni-login'))
 
 def alumni_login(request):
-    #added in 2075 #does this have any side effects? just using this as it seems to work... for now 
-    #if a logged in user comes back to this page then if logged in hellore below gives an error...
-    #if request.user.is_authenticated:
-    logout(request)
-
-    #form = LoginForm()
     form = Alumni_signup_form()
+    hellore_sign_in=None
+    hellore_sign_up=None
     if request.method == "POST":
-        #if 'roll_number' in request.POST:
-        #    form = LoginForm(data=request.POST)
-        #    if form.is_valid():
-        #        kwargs={
-        #            'last_name':form.data.get('last_name'),
-        #            'batch_bs':form.data.get('batch_bs'),
-        #            'program_code':form.data.get('program'),
-        #            'roll_number':form.data.get('roll_number')
-        #        }
-        #        studnt = get_student_object(kwargs,Student.objects.filter(),form.data.get('dob_bs'))
-        #        if studnt.user_account is not None:
-        #            #raise ValidationError(studnt.user_account.name)
-        #            messages.warning(request, f'You naed to login with your email and password.')# {studnt.first_name}.')
-        #            return redirect(reverse('alumni-login')) 
-                
-        #        return redirect(
-        #            reverse('record-update',
-        #                    kwargs={
-        #                        'batch_bs':form.data.get('batch_bs'),
-        #                        'program_code':form.data.get('program'),
-        #                        'roll_number':form.data.get('roll_number'),
-        #                        'last_name':form.data.get('last_name').strip(), #i know this is bad form but its past midnight and I am tired af. Sorry :D
-        #                        'dob_bs':form.data.get('dob_bs').replace('/', ''),
-        #                }
-        #            )
-        #        )
+        logout(request)
         if 'password2' in request.POST:
             form = Alumni_signup_form(data=request.POST)
             if form.is_valid():
@@ -137,23 +110,36 @@ def alumni_login(request):
                     #raise ValidationError(studnt.user_account.name)
                     messages.warning(request, f'You have already signed up. You need to log in.')# {studnt.first_name}.')
                     return redirect(reverse('alumni-login')) 
+                else:
+                    return allauth_accounts_views.signup(request)
             else:
                 messages.warning(request, f'Record not found! Please check credentials properly')
-        else:
+                request.method = 'GET'  #so that sign in part doesnt complain
+        else:   #might need some condition check , but later
+            hellore_sign_in = allauth_accounts_views.login(request)
             #return HttpResponse("ynha aayo...")
-            allauth_accounts_views.login(request)
             if request.user.is_authenticated:
-                return allauth_accounts_views.login(request)
+                return hellore_sign_in#allauth_accounts_views.login(request)
             pass
-    
+    if request.user.is_authenticated:
+        return allauth_accounts_views.login(request)
     #return HttpResponse("ynha aayo... ta")#delete this line
     # else:
     #     form = LoginForm()
-    hellore_sign_in=allauth_accounts_views.login(request)
-    try:
-        hellore_sign_in = hellore_sign_in.render().content.decode('utf-8')
-    except AttributeError:
-        return hellore_sign_in
+
+    if hellore_sign_in is None:#either get method or signup-post->get
+        #request
+        hellore_sign_in = allauth_accounts_views.login(request)
+
+    try: hellore_sign_in = hellore_sign_in.render().content.decode('utf-8')
+    except AttributeError: return hellore_sign_in
+    except TypeError: return ValidationError("hero is gone")
+
+    #not needed yet
+    #try: hellore_sign_up = hellore_sign_in.render().content.decode('utf-8')
+    #except AttributeError: return hellore_sign_in
+    #except TypeError: return ValidationError("hero is gone")
+
     context = {
         'form': form,
         'hellore':hellore_sign_in,
@@ -165,7 +151,9 @@ def alumni_login(request):
 def alumni_logged_in(request):
     if not request.user.is_authenticated:
         return redirect(reverse('alumni-login'))
-    elif not request.user.groups.filter(name="Students").exists():
+    #return HttpResponse(request.user.username)#"ynha aayo. ni.. ta")#delete this line
+    if not request.user.groups.filter(name="Students").exists():
+        logout(request)
         return redirect(reverse('alumni-login'))
     
     studnt = request.user.student_user
@@ -199,7 +187,7 @@ def alumni_logged_in(request):
     else:
         params[4]=' '
     return redirect(
-                'record-update',#'record-update-gate',
+                'record-update-gate', #'record-update',
                 batch_bs=params[0],
                 program_code=params[1],
                 roll_number=params[2],
@@ -293,7 +281,7 @@ def AlumniUpdateViewGate(request,batch_bs,program_code,roll_number,last_name,dob
 
 class AlumniUpdateView(SuccessMessageMixin, UpdateView):
     model = Student
-    template_name = '/alumni_form.html'
+    template_name = 'records/alumni_form.html'
     queryset = Student.objects.filter()
     form_class = AlumniForm
     success_message ="Alumni record updated successfully!"
@@ -314,6 +302,7 @@ class AlumniUpdateView(SuccessMessageMixin, UpdateView):
         context = self.get_context_data()
         addresses = context['addresses']
         further_academic_status = context['furtheracademicstatus']
+        #raise ValidationError(form[dob_bs])
         with transaction.atomic():
             form.instance.created_by = self.request.user###???
             self.object = form.save()
@@ -337,7 +326,11 @@ class AlumniUpdateView(SuccessMessageMixin, UpdateView):
 
     def get_form(self, *args, **kwargs):
         dob_bs = self.kwargs['dob_bs']
-        dob_bs = dob_bs[:4]+'/'+dob_bs[4:6]+'/'+dob_bs[6:] if len(dob_bs)>4 else dob_bs
+        if dob_bs == '20YYMMDD':
+            dob_bs='2011/10/30'
+            #raise ValidationError(dob_bs)
+        else:
+            dob_bs = dob_bs[:4]+'/'+dob_bs[4:6]+'/'+dob_bs[6:] if len(dob_bs)>4 else dob_bs
         form = super(AlumniUpdateView, self).get_form(*args, **kwargs)
         if not form.base_fields['dob_bs']:
             form.base_fields['dob_bs']= dob_bs

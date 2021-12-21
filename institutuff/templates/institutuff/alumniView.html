@@ -5,9 +5,9 @@
     <legend class="border-bottom mb-4 mt-4">
         {%if user.is_authenticated%} <b>Logged in as {{user.username}}</b>{%else%}<b>Not logged in</b>{%endif%}<!--this line works?-->
     </legend>
-    <div class = "container">
+    <div class="container">
         <div class="tabs">
-            <div class="tab-link" onclick="openFilterSection(event,'batch_bs')"> batch </div>
+            <div class="tab-link" onclick="openFilterSection(event,'batch_bs')">  </div>
             <div class="tab-link"></div>
         </div>
         <form method="get">
@@ -15,48 +15,56 @@
             <input type="submit" />
         </form>
         <br>
-        <div class="list row col col-md-8 offset-md-2" style="min-height: 100px; padding:25px; background-color:#d1d1d1; box-shadow: 12px 12px 16px 0 rgba(0, 0, 0, 0.25), -8px -8px 12px 0 rgba(255, 255, 255, 0.3);  border-radius:10px ;">
+        <table class="table table-striped" style="border:2px solid rgb(88, 88, 88);">
+            <!--div class="list row col col-md-8 offset-md-2" style="min-height: 100px; padding:25px; background-color:#d1d1d1; box-shadow: 12px 12px 16px 0 rgba(0, 0, 0, 0.25), -8px -8px 12px 0 rgba(255, 255, 255, 0.3);  border-radius:10px ;">-->
             {%for alumnus in alumni%}
             <ul class="list-element">
-                <a href="{{alumnus.absolute_url}}">
-                    {{alumnus.first_name}} {%if alumnus.middle_name%}{{alumnus.middle_name}}{%endif%} {{alumnus.last_name}}
-                </a>
-                {{alumnus.full_roll_number}}
+            <tr>
+                <td>
+                    <a href="{{alumnus.absolute_url}}" class="btn" style="width: 40%; background-color:#ddd; border: 2px solid rgb(88,88,88); border-radius: 6px;">
+                        {{alumnus.first_name}} {%if alumnus.middle_name%}{{alumnus.middle_name}}{%endif%} {{alumnus.last_name}}
+                    </a>
+                </td>
+                <td>
+                    {{alumnus.full_roll_number}}
+                </td>
+            </tr>
             </ul>
             {%endfor%}
-        </div>
-        <br />
-        <div class="pagination row small col-4 offset-4 col-md-2 offset-md-5">
-            <span class="step-links row w-100">
-                {% if page_obj.has_previous %}
-                <a href="?page=1" class="column">&laquo; first</a>
-                <span class="col-sm-1"></span>
-                <a href="?page={{ page_obj.previous_page_number }}" class="column">previous</a>
-                <span class="col-sm-1"></span>
-                {% endif %}
-                <span class="current" class="column">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            <!--/div-->
+        </table>
+            <br />
+            <div class="pagination row small col-4 offset-4 col-md-2 offset-md-5">
+                <span class="step-links row w-100">
+                    {% if page_obj.has_previous %}
+                    <a href="?page=1" class="column">&laquo; first</a>
+                    <span class="col-sm-1"></span>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="column">previous</a>
+                    <span class="col-sm-1"></span>
+                    {% endif %}
+                    <span class="current" class="column">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                    <span class="col-sm-1"></span>
+                    <a href="?page={{ page_obj.next_page_number }}" class="column">next</a>
+                    <span class="col-sm-1"></span>
+                    <a href="?page={{ page_obj.paginator.num_pages}}" class="column">last &raquo;</a>
+                    {% endif %}
                 </span>
-                {% if page_obj.has_next %}
-                <span class="col-sm-1"></span>
-                <a href="?page={{ page_obj.next_page_number }}" class="column">next</a>
-                <span class="col-sm-1"></span>
-                <a href="?page={{ page_obj.paginator.num_pages}}" class="column">last &raquo;</a>
-                {% endif %}
-            </span>
-            <div class="w-100"></div>
-            <div class="row column">
-                goto page : <input type="number" id="page_num" onchange="pnum_change(this.value)" style="width:50px;">
-                <a id="go_to_page_num" href="">Go</a>
-            </div>
-            <script>
+                <div class="w-100"></div>
+                <div class="row column">
+                    goto page : <input type="number" id="page_num" onchange="pnum_change(this.value)" style="width:50px;">
+                    <a id="go_to_page_num" href="">Go</a>
+                </div>
+                <script>
                 function pnum_change(val) {
                     //console.log(val)
                     let page_num = {{ page_obj.number }}
                     if (val > 0 && val <= {{ page_obj.paginator.num_pages }}) page_num = val;
                     document.getElementById("go_to_page_num").setAttribute("href", "?page=" + page_num);
                 }
-            </script>
-        </div>
+                </script>
+            </div>
     </div>
     {%endblock%}

@@ -171,17 +171,23 @@ class Student(models.Model):
     def absolute_url(self):
         return self.get_absolute_url()
 
+    
+
     def get_absolute_url(self):
+        dob_bs = '20YYMMDD'
+        if self.dob_bs is not None:
+            dob_bs = self.dob_bs.replace('/', '')
         be_enroll_data_complete = self.be_program and self.be_batch_bs and self.be_roll_number
         # path('<batch_bs>/<program_code>/<roll_number>/update/', AlumniUpdateView.as_view(), name='record-update'),
         if be_enroll_data_complete:
-            return reverse('record-update', kwargs={'batch_bs': self.be_batch_bs, 'program_code': self.be_program, 'roll_number':self.be_roll_number, 'last_name':self.last_name, 'dob_bs':self.dob_bs.replace('/', '') if self.dob_bs else ' '})
+            return reverse('record-update-gate', kwargs={'batch_bs': self.be_batch_bs, 'program_code': self.be_program, 'roll_number':self.be_roll_number, 'last_name':self.last_name, 'dob_bs':dob_bs})
         msc_enroll_data_complete = self.msc_program and self.msc_batch_bs and self.msc_roll_number
         if msc_enroll_data_complete:
-            return reverse('record-update', kwargs={'batch_bs': self.msc_batch_bs, 'program_code': self.msc_program, 'roll_number':self.msc_roll_number, 'last_name':self.last_name, 'dob_bs':self.dob_bs.replace('/', '') if self.dob_bs else ' '})
+            #raise ValidationError("hey there" + reverse('record-update', kwargs={'batch_bs': self.msc_batch_bs, 'program_code': self.msc_program, 'roll_number':self.msc_roll_number, 'last_name':self.last_name, 'dob_bs':dob_bs}))
+            return reverse('record-update-gate', kwargs={'batch_bs': self.msc_batch_bs, 'program_code': self.msc_program, 'roll_number':self.msc_roll_number, 'last_name':self.last_name, 'dob_bs':dob_bs})
         phd_enroll_data_complete = self.phd_batch_bs and self.phd_roll_number
         if phd_enroll_data_complete:
-            return reverse('record-update', kwargs={'batch_bs': self.phd_batch_bs, 'roll_number':self.phd_roll_number, 'last_name':self.last_name, 'dob_bs':self.dob_bs.replace('/', '') if self.dob_bs else ' '})
+            return reverse('record-update-gate', kwargs={'batch_bs': self.phd_batch_bs, 'roll_number':self.phd_roll_number, 'last_name':self.last_name, 'dob_bs':dob_bs})
         return reverse('alumni-login')
 
     def save(self, *args, **kwargs):
