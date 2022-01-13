@@ -1,7 +1,7 @@
 # DOECE Alumni Portal
 A project for Department Of Electronics and Computer Engineering (DOECE), Pulchowk Campus!!!
 
-### A DBMS project by:<br>
+### A Software Engineering project by:<br>
 Jiwan Prasad Guragain 075bct041<br>
 Yaman Subedi          075bct045<br>
 Luna Manandhar        075bct047<br>
