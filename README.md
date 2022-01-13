@@ -26,6 +26,14 @@ A project for Department Of Electronics and Computer Engineering (DOECE), Pulcho
 ### Languages, Frameworks:
 Python, Django, PostGreSQL
 
+#### Some preconditions to run this Project(do followong on django admin):
+- Create a group Students
+- Create a group Institutes
+   - Create a user and add it to the institute group
+   - Create an entry in the Institutes model
+   - Use a user in Institutes group in this entry's user field
+- <host>/institute is the address to access institute facilities
+   
 
 ### Project Details
 Main django app- DOECEAlumniStudent<br>
