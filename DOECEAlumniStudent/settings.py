@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    #'django-extensions',
     'records',
     'institutuff',
     'django.contrib.admin',
