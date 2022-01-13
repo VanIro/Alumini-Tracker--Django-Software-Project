@@ -2,10 +2,10 @@
 A project for Department Of Electronics and Computer Engineering (DOECE), Pulchowk Campus!!!
 
 ### A Software Engineering project by:<br>
-Jiwan Prasad Guragain 075bct041<br>
-Yaman Subedi          075bct045<br>
-Luna Manandhar        075bct047<br>
-Bipin Khanal          075bct022<br>
+- Jiwan Prasad Guragain 075bct041<br>
+- Yaman Subedi          075bct045<br>
+- Luna Manandhar        075bct047<br>
+- Bipin Khanal          075bct022<br>
 
 ### ... Continued on the project by:<br>
 Anusandhan Pokhrel 073BCT507<br>
@@ -13,6 +13,13 @@ Baibhav Bista      073BCT511<br>
 Lumanti Dangol     073BCT521<br>
 Mohit Kedia        073BCT523<br>
 
+### Added Features:<br>
+- Signup and Login feature for students using email/password credentials 
+- An institute level access system
+    * Such users can view and edit student data like in admin, but through a django app that we created.
+    * Features in the app:
+        - A versatile/robust filter based on categories(single,multiple)
+        - Select, view and edit student data
 
 ### Languages, Frameworks:
 Python, Django, PostGreSQL
