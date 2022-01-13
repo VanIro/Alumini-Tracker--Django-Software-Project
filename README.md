@@ -2,6 +2,12 @@
 A project for Department Of Electronics and Computer Engineering (DOECE), Pulchowk Campus!!!
 
 ### A DBMS project by:<br>
+Jiwan Prasad Guragain 073BCT507<br>
+Yaman Subedi      073BCT511<br>
+Luna Manandhar     073BCT521<br>
+Bipin Khanal        073BCT523<br>
+
+### ... Continued on the project by:<br>
 Anusandhan Pokhrel 073BCT507<br>
 Baibhav Bista      073BCT511<br>
 Lumanti Dangol     073BCT521<br>
