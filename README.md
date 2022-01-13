@@ -21,7 +21,7 @@ Mohit Kedia        073BCT523<br>
         - A versatile/robust filter based on categories(single,multiple)
         - Select, view and edit student data
 
-####-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
 
 ### Languages, Frameworks:
 Python, Django, PostGreSQL
