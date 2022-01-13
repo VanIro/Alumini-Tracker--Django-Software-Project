@@ -26,8 +26,8 @@ A project for Department Of Electronics and Computer Engineering (DOECE), Pulcho
 ### Languages, Frameworks:
 Python, Django, PostGreSQL
 
-#### Some preconditions to run this Project:<br>
-##### (do following on django admin)
+## Some preconditions to run this Project:<br>
+#### (do following on django admin)
 - Create a group Students
 - Create a group Institutes
    - Create a user and add it to the institute group
