@@ -5,7 +5,7 @@ A project for Department Of Electronics and Computer Engineering (DOECE), Pulcho
 Jiwan Prasad Guragain 075bct041<br>
 Yaman Subedi          075bct045<br>
 Luna Manandhar        075bct047<br>
-Bipin Khanal          075bct021<br>
+Bipin Khanal          075bct022<br>
 
 ### ... Continued on the project by:<br>
 Anusandhan Pokhrel 073BCT507<br>
