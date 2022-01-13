@@ -8,10 +8,10 @@ A project for Department Of Electronics and Computer Engineering (DOECE), Pulcho
 - Bipin Khanal          075bct022<br>
 
 ### ... Continued on the project by:<br>
-Anusandhan Pokhrel 073BCT507<br>
-Baibhav Bista      073BCT511<br>
-Lumanti Dangol     073BCT521<br>
-Mohit Kedia        073BCT523<br>
+* Anusandhan Pokhrel 073BCT507<br>
+* Baibhav Bista      073BCT511<br>
+* Lumanti Dangol     073BCT521<br>
+* Mohit Kedia        073BCT523<br>
 
 ### Added Features:<br>
 - Signup and Login feature for students using email/password credentials 
