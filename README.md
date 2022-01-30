@@ -13,6 +13,12 @@ A project for Department Of Electronics and Computer Engineering (DOECE), Pulcho
 * Lumanti Dangol     073BCT521<br>
 * Mohit Kedia        073BCT523<br>
 
+### Previous Features:<br>
+- View Yearbook and change own's details for students ######(No log in protection...)
+- Complete Database, and list views and edit views implemented
+- Solid django admin app
+- Back end hosting and backup concepts implemented 
+
 ### Added Features:<br>
 - Signup and Login feature for students using email/password credentials 
 - An institute level access system
