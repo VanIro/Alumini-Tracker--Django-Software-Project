@@ -1,16 +1,46 @@
 # DOECE Alumni Portal
 A project for Department Of Electronics and Computer Engineering (DOECE), Pulchowk Campus!!!
 
-### A DBMS project by:<br>
-Anusandhan Pokhrel 073BCT507<br>
-Baibhav Bista      073BCT511<br>
-Lumanti Dangol     073BCT521<br>
-Mohit Kedia        073BCT523<br>
+### A Software Engineering project by:<br>
+- Jiwan Prasad Guragain 075bct041<br>
+- Yaman Subedi          075bct045<br>
+- Luna Manandhar        075bct047<br>
+- Bipin Khanal          075bct022<br>
 
+### ... Continued on the project by:<br>
+* Anusandhan Pokhrel 073BCT507<br>
+* Baibhav Bista      073BCT511<br>
+* Lumanti Dangol     073BCT521<br>
+* Mohit Kedia        073BCT523<br>
+
+### Previous Features:<br>
+- View Yearbook and change own's details for students (No log in protection...)
+- Complete Database, and list views and edit views implemented
+- Solid django admin app
+- Back end hosting and backup concepts implemented 
+
+### Added Features:<br>
+- Signup and Login feature for students using email/password credentials 
+- An institute level access system
+    * Such users can view and edit student data like in admin, but through a django app that we created.
+    * Features in the app:
+        - A versatile/robust filter based on categories(single,multiple)
+        - Select, view and edit student data
+
+-----------------------------------------------------------------------------------------------------------------------
 
 ### Languages, Frameworks:
 Python, Django, PostGreSQL
 
+## Some preconditions to run this Project:<br>
+#### (do following on django admin)
+- Create a group Students
+- Create a group Institutes
+   - Create a user and add it to the institute group
+   - Create an entry in the Institutes model
+   - Use a user in Institutes group in this entry's user field
+- &lt;host&gt;/institute is the address to access institute facilities
+   
 
 ### Project Details
 Main django app- DOECEAlumniStudent<br>
