@@ -15,6 +15,7 @@ from django.views.generic.edit import DeleteView
 from django.core.mail.message import EmailMessage
 
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 
 
 
@@ -100,12 +101,25 @@ class view_alumni(ListView):
     def __init__(self, *args, **kwargs):
         self.filter_form=None
         self.query_display = None
+        #self.paginate_by = 1
         super(view_alumni,self).__init__(*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context=super(view_alumni,self).get_context_data(**kwargs)
         context['filter_form'] = self.filter_form
         context['query_display'] = self.query_display
+        url_get_part = self.request.get_full_path().split("?")
+        if len(url_get_part)<=1:
+            url_get_part=[""]
+        else:
+            url_get_part=url_get_part[1].split("page")
+            if len(url_get_part)>1:
+                #if there are more get parameters after page(in future), but not used now
+                url_get_part[1] = url_get_part[1].split('&',1)[-1]
+            if len(url_get_part[0])>0 and (not url_get_part[0][-1] ==' &') :
+                url_get_part[0] = url_get_part[0]+'&'
+          
+        context['current_url_get'] = url_get_part[0]
         #context['filter'] = StudentFilter(self.request.GET, self.queryset)
         return context
 
@@ -117,6 +131,9 @@ class view_alumni(ListView):
         self.filter_form = filter.form
         return filter.qs#self.context['filter'].qs#Student.objects.filter()
 
+    def get_paginator(self, queryset, per_page, **kwargs):
+        #raise ValidationError(self.get_paginator()) #= Paginator(filter.qs,3)
+        return super().get_paginator(queryset, per_page, **kwargs)
     #def get_context_data(self,*args,**kwargs):
     #    context=super().get_context_data(*args,**kwargs)
     #    context[]=institute.objects.all().order_by()

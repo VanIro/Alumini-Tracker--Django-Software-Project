@@ -132,6 +132,10 @@ class Student(models.Model):
 
     comments = models.TextField(blank=True, null=True)
 
+    #def get_merge_validation_info(self):
+    #    basic_info=[]
+
+
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['be_program', 'be_batch_bs', 'be_roll_number'], name="unique_be_credentials"),
@@ -187,7 +191,7 @@ class Student(models.Model):
             return reverse('record-update-gate', kwargs={'batch_bs': self.msc_batch_bs, 'program_code': self.msc_program, 'roll_number':self.msc_roll_number, 'last_name':self.last_name, 'dob_bs':dob_bs})
         phd_enroll_data_complete = self.phd_batch_bs and self.phd_roll_number
         if phd_enroll_data_complete:
-            return reverse('record-update-gate', kwargs={'batch_bs': self.phd_batch_bs, 'roll_number':self.phd_roll_number, 'last_name':self.last_name, 'dob_bs':dob_bs})
+            return reverse('record-update-gate', kwargs={'batch_bs': self.phd_batch_bs,'program_code':'PhD', 'roll_number':self.phd_roll_number, 'last_name':self.last_name, 'dob_bs':dob_bs})
         return reverse('alumni-login')
 
     def save(self, *args, **kwargs):

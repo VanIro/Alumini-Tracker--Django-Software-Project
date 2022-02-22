@@ -22,6 +22,8 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import Group
 from django.urls import reverse
 
+from institutuff.filters import StudentFilter
+
 be_programs_list = [program[0] for program in BE_PROGRAM_CHOICES]
 msc_programs_list = [program[0] for program in MSC_PROGRAM_CHOICES]
 phd_programs_list = ['PhD']
@@ -55,15 +57,40 @@ class YearbookListView(ListView):
     model = Student
     template_name = 'records/yearbook_list.html'
     context_object_name = 'students'
+    
+    def __init__(self, *args, **kwargs):
+        self.filter_form=None
+        self.query_display = None
+        super(YearbookListView,self).__init__(*args,**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context=super(YearbookListView,self).get_context_data(**kwargs)
+        context['filter_form'] = self.filter_form
+        context['query_display'] = self.query_display
+        url_get_part = self.request.get_full_path().split("?")
+        if len(url_get_part)<=1:
+            url_get_part=[""]
+        else:
+            url_get_part=url_get_part[1].split("page")
+            if len(url_get_part)>1:
+                #if there are more get parameters after page(in future), but not used now
+                url_get_part[1] = url_get_part[1].split('&',1)[-1]
+            if len(url_get_part[0])>0 and (not url_get_part[0][-1] ==' &') :
+                url_get_part[0] = url_get_part[0]+'&'
+          
+        context['current_url_get'] = url_get_part[0]
+        #context['filter'] = StudentFilter(self.request.GET, self.queryset)
+        return context
 
     def get_queryset(self):
+        queryset = None
         if self.kwargs['program_code'] in be_programs_list:
             try:
                 bachelor = Student.objects.filter(
                     be_program__iexact=self.kwargs['program_code'],
                     be_batch_bs__iexact=self.kwargs['batch_bs'],
                 ).order_by('be_roll_number')
-                return bachelor
+                queryset =  bachelor
             except Student.DoesNotExist:
                 raise Http404("No Alumni matches the given query.")
         elif self.kwargs['program_code'] in msc_programs_list:
@@ -72,7 +99,7 @@ class YearbookListView(ListView):
                     msc_program__iexact=self.kwargs['program_code'],
                     msc_batch_bs__iexact=self.kwargs['batch_bs'],
                 ).order_by('msc_roll_number')
-                return master
+                queryset =  master
             except Student.DoesNotExist:
                 raise Http404("No Alumni matches the given query.")
         elif self.kwargs['program_code'] in phd_programs_list:
@@ -80,11 +107,18 @@ class YearbookListView(ListView):
                 phd = Student.objects.filter(
                     phd_batch_bs__iexact=self.kwargs['batch_bs'],
                 ).order_by('phd_roll_number')
-                return phd
+                queryset =  phd
             except Student.DoesNotExist:
                 raise Http404("No Alumni matches the given query.")
         else:
             raise Http404("No Alumni matches the given query.")
+        
+        
+        #self.query_display = query_string(self.request.GET) 
+        filter = StudentFilter(self.request.GET, queryset)
+        self.filter_form = filter.form
+        #print(type(self.filter_form.name))
+        return filter.qs
 
 def logout_student(request):
     logout(request)

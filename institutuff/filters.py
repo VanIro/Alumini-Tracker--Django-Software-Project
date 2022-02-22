@@ -12,6 +12,7 @@ class StudentFilter(django_filters.FilterSet):
     program = django_filters.CharFilter(method='check_program', label='program code')
     level = django_filters.CharFilter(method='check_level',label='level')#, choices=PROGRAM_LEVEL_CHOICES)
     country = django_filters.CharFilter(method='check_country',label='country')
+    name = django_filters.CharFilter(method='check_name',label='Name')
 
     def check_batch(self, queryset, name, value):
         #raise ValidationError(list(queryset.filter( Q(be_batch_bs=value)|Q(msc_batch_bs=value)|Q(phd_batch_bs=value) )))
@@ -54,6 +55,30 @@ class StudentFilter(django_filters.FilterSet):
         list_stdnt = [a.student.id for a in qset] 
         #raise ValidationError(list_stdnt)
         return Student.objects.filter(id__in=list_stdnt)
+
+    def check_name(self, queryset, name, value):
+        name_words = str(value).split()
+        for i in range(len(name_words)):
+            name_words[i]=name_words[i].strip()
+        len_name_words = len(name_words)
+        if len_name_words==0:
+            #raise ValidationError(f"{name},{value}")
+            pass
+        query = Q(first_name__iexact=name_words[0])
+        if len_name_words==1:
+            for s in ["middle", "last"]:
+                query = query | Q(**{s+'_name__iexact':name_words[0]})
+            
+        else:
+            query_2 = Q(last_name__iexact=name_words[-1])
+            query_1 = Q(middle_name__iexact=name_words[-2])
+            if len_name_words==2:
+                query = query & ( Q(middle_name__iexact=name_words[1]) | query_2 )
+                query = query | ( query_1 & query_2 )
+            else:
+                query = query & query_1 & query_2
+
+        return queryset.filter(query)
 
 
     class Meta:

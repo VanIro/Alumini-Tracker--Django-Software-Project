@@ -1,14 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\DOECEAlumniStudent",
-    "\\institutuff",
-    "\\institutuff\\templates",
-    "\\institutuff\\templates\\institutuff",
-    "\\records",
-    "\\records\\templates",
-    "\\records\\templates\\records"
+    "\\institutuff"
   ],
-  "SelectedNode": "\\DOECEAlumniStudent\\urls.py",
+  "SelectedNode": "\\institutuff\\filters.py",
   "PreviewInSolutionExplorer": false
 }

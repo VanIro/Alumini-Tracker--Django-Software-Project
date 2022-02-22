@@ -4,6 +4,13 @@
     <h2 class="mb-3"><b>Yearbook {{ view.kwargs.program_code }} Batch {{ view.kwargs.batch_bs }}</b></h2>
 
     Is your data incomplete or incorrect? You can update your info <a href="{% url 'alumni-login' %}">here</a><br><br>
+
+    
+    <form method="get">
+        <label for="id_name">Search By Name </label> {{ filter_form.name }}
+        <input type="submit" />
+    </form>
+    <br>
     {% for student in students %}
         <article class="media content-section">
           {% if student.recent_passport_size_photo %}

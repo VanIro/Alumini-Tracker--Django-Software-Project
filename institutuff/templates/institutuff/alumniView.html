@@ -40,7 +40,7 @@
                     {% if page_obj.has_previous %}
                     <a href="?page=1" class="column">&laquo; first</a>
                     <span class="col-sm-1"></span>
-                    <a href="?page={{ page_obj.previous_page_number }}" class="column">previous</a>
+                    <a href="?{{current_url_get}}page={{ page_obj.previous_page_number }}" class="column">previous</a>
                     <span class="col-sm-1"></span>
                     {% endif %}
                     <span class="current" class="column">
@@ -48,7 +48,7 @@
                     </span>
                     {% if page_obj.has_next %}
                     <span class="col-sm-1"></span>
-                    <a href="?page={{ page_obj.next_page_number }}" class="column">next</a>
+                    <a href="?{{current_url_get}}page={{ page_obj.next_page_number }}" class="column">next</a>
                     <span class="col-sm-1"></span>
                     <a href="?page={{ page_obj.paginator.num_pages}}" class="column">last &raquo;</a>
                     {% endif %}
