@@ -82,6 +82,8 @@
           </div>
         {% endspaceless %}
         </article>
+    {%empty%}
+        <h3>No results found...</h3>
     {% endfor %}
     {% if is_paginated %}
 

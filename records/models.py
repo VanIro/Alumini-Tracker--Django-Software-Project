@@ -201,6 +201,14 @@ class Student(models.Model):
 
     def clean(self):
 
+        ##clean multiple whitespaces in between last_name words
+        #last_name_words=self.last_name.strip().split()
+        #last_name_cleaned=""
+        #print("hey")
+        #if len(last_name_words)>1:
+        #    last_name_cleaned = "".join([s+" " for s in last_name_words] ).rstrip()
+        #self.last_name=last_name_cleaned
+
         attributes_to_change_to_none_if_empty = [
             'be_program', 'be_batch_bs', 'be_roll_number',
             'msc_program', 'msc_batch_bs', 'msc_roll_number',

@@ -75,7 +75,8 @@ class YearbookListView(ListView):
             if len(url_get_part)>1:
                 #if there are more get parameters after page(in future), but not used now
                 url_get_part[1] = url_get_part[1].split('&',1)[-1]
-            if len(url_get_part[0])>0 and (not url_get_part[0][-1] ==' &') :
+            if len(url_get_part[0])>0 and (not url_get_part[0][-1] =='&') :
+                print("hey")
                 url_get_part[0] = url_get_part[0]+'&'
           
         context['current_url_get'] = url_get_part[0]

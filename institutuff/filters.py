@@ -56,28 +56,55 @@ class StudentFilter(django_filters.FilterSet):
         #raise ValidationError(list_stdnt)
         return Student.objects.filter(id__in=list_stdnt)
 
-    def check_name(self, queryset, name, value):
-        name_words = str(value).split()
-        for i in range(len(name_words)):
-            name_words[i]=name_words[i].strip()
-        len_name_words = len(name_words)
-        if len_name_words==0:
-            #raise ValidationError(f"{name},{value}")
-            pass
-        query = Q(first_name__iexact=name_words[0])
-        if len_name_words==1:
-            for s in ["middle", "last"]:
-                query = query | Q(**{s+'_name__iexact':name_words[0]})
-            
-        else:
-            query_2 = Q(last_name__iexact=name_words[-1])
-            query_1 = Q(middle_name__iexact=name_words[-2])
-            if len_name_words==2:
-                query = query & ( Q(middle_name__iexact=name_words[1]) | query_2 )
-                query = query | ( query_1 & query_2 )
-            else:
-                query = query & query_1 & query_2
+    def Q_check_list_in_field(self,q_list,field_name='last_name'):
+        #this type of query can be optimised if in the search field, multiple whitespaces in between the words are cleaned
+        #with:
+        #"".join([ s+" " for s in q_list ]).rstrip() instead of the loop
+        query = Q()
+        for s in q_list:
+            query = query & Q(**{field_name+"__icontains":s})
+        return query
 
+    def check_name(self, queryset, name, value):
+        #aali sochya vanda badhi complex huna pugyo yo function chai :{
+        name_words = str(value).split()
+        len_name_words = len(name_words)
+
+        #len_name_words will never be zero
+
+        #(F,M)1,L,(FM)2,FL,ML,FML
+
+        query_0 = Q(first_name__iexact=name_words[0]) 
+
+        query = Q()
+        if len_name_words==1:
+            #F,M
+            query = query_0 |Q(middle_name__iexact=name_words[0]) 
+        
+        last_name_possibly_L=name_words
+        ##last_name_possibly = "".join([ s+" " for s in name_words ]).rstrip()
+        #L
+        query = query | self.Q_check_list_in_field(last_name_possibly_L)#Q(last_name__icontains=last_name_possibly) 
+        if len_name_words>1:
+            if len_name_words==2: 
+                #FM
+                query = query | ( query_0 & Q(middle_name__iexact=name_words[1]) ) 
+            first = last_name_possibly_L.pop(0)
+            ##first, last_name_possibly = last_name_possibly.split(" ",1)
+            #FL
+            query = query | \
+                        ( Q(first_name__iexact=first) & self.Q_check_list_in_field(last_name_possibly_L) )#Q(last_name__icontains=last_name_possibly)  )
+            #ML
+            query = query | \
+                        ( Q(middle_name__iexact=first) & self.Q_check_list_in_field(last_name_possibly_L) )#Q(last_name__icontains=last_name_possibly)  )
+            if len_name_words>2:
+                middle = last_name_possibly_L.pop(0)
+                ##middle, last_name_possibly = last_name_possibly.split(" ",1)
+                #FML
+                query = query | \
+                            ( Q(first_name__iexact=first) & Q(middle_name__iexact=middle) & self.Q_check_list_in_field(last_name_possibly_L) )#Q(last_name__icontains=last_name_possibly)  )
+
+        #print(query)
         return queryset.filter(query)
 
 

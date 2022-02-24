@@ -12,7 +12,7 @@
         </div>
         <form method="get">
             {{ filter_form.as_p }}
-            <input type="submit" />
+            <button type="submit"> Search </button>
         </form>
         <br>
         {%if not query_display is None%}<div class="query_display">Results for query : {{query_display}}</div>{%endif%}
@@ -55,15 +55,14 @@
                 </span>
                 <div class="w-100"></div>
                 <div class="row column">
-                    goto page : <input type="number" id="page_num" onchange="pnum_change(this.value)" style="width:50px;">
+                    goto page : <input type="number" id="page_num" onchange="pnum_change(this.value,'{{current_url_get}}')" style="width:50px;">
                     <a id="go_to_page_num" href="">Go</a>
                 </div>
                 <script>
-                function pnum_change(val) {
-                    //console.log(val)
+                function pnum_change(val,get_params) {
                     let page_num = {{ page_obj.number }}
                     if (val > 0 && val <= {{ page_obj.paginator.num_pages }}) page_num = val;
-                    document.getElementById("go_to_page_num").setAttribute("href", "?page=" + page_num);
+                    document.getElementById("go_to_page_num").setAttribute("href", "?"+get_params+"page=" + page_num);
                 }
                 </script>
             </div>
