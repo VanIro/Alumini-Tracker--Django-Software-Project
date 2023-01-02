@@ -28,7 +28,7 @@ A project for Department Of Electronics and Computer Engineering (DOECE), Pulcho
         - Select, view and edit student data
 
 ### ERD of Database Models
-![ERD drawio](https://user-images.githubusercontent.com/61639823/210230776-d8c36360-3732-411e-a005-49bc7d59765e.png)
+![ERD drawio](https://user-images.githubusercontent.com/61639823/210230921-2295b825-137b-4736-96dd-c3688e510100.png)
 
 -----------------------------------------------------------------------------------------------------------------------
 
