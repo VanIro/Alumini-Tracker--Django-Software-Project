@@ -30,6 +30,10 @@ A project for Department Of Electronics and Computer Engineering (DOECE), Pulcho
 ### ERD of Database Models
 ![ERD drawio](https://user-images.githubusercontent.com/61639823/210230921-2295b825-137b-4736-96dd-c3688e510100.png)
 
+### Some screenshots of the web pages:
+![image](https://user-images.githubusercontent.com/61639823/210233508-eac95641-691e-49e3-9c89-8e79db4d7c56.png)
+
+
 -----------------------------------------------------------------------------------------------------------------------
 
 ### Languages, Frameworks:
