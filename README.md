@@ -27,6 +27,9 @@ A project for Department Of Electronics and Computer Engineering (DOECE), Pulcho
         - A versatile/robust filter based on categories(single,multiple)
         - Select, view and edit student data
 
+### ERD of Database Models
+![ERD drawio](https://user-images.githubusercontent.com/61639823/210230776-d8c36360-3732-411e-a005-49bc7d59765e.png)
+
 -----------------------------------------------------------------------------------------------------------------------
 
 ### Languages, Frameworks:
